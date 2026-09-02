@@ -385,3 +385,20 @@ INSERT INTO system_settings (setting_key, setting_value, description) VALUES
 INSERT INTO notifications (user_id, title, body, type, reference_id) VALUES
 (3, 'Tu reporte fue recibido', 'El incidente INC-2026-0001 ha sido registrado correctamente.', 'incident', 1),
 (2, 'Nueva alerta crítica', 'Atropello reportado en Avenida Caracas. Requiere atención inmediata.', 'alert', 2);
+-- ============================================================
+-- ROLES
+-- ============================================================
+
+CREATE TABLE roles (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255) DEFAULT NULL,
+    is_active   TINYINT(1) NOT NULL DEFAULT 1,
+    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+INSERT INTO roles (name, description) VALUES
+('citizen',   'Ciudadano que reporta incidentes'),
+('operator',  'Operador de la central de monitoreo'),
+('admin',     'Administrador del sistema'),
+('emergency', 'Personal de unidades de emergencia');
