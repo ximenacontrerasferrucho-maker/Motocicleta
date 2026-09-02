@@ -402,3 +402,21 @@ INSERT INTO roles (name, description) VALUES
 ('operator',  'Operador de la central de monitoreo'),
 ('admin',     'Administrador del sistema'),
 ('emergency', 'Personal de unidades de emergencia');
+-- ============================================================
+-- USO DE LA APP (primer acceso / ya utilizó la app)
+-- ============================================================
+
+CREATE TABLE user_app_usage (
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id         INT UNSIGNED NOT NULL,
+    first_used_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_used_at    DATETIME DEFAULT NULL,
+    usage_count     INT UNSIGNED NOT NULL DEFAULT 1,
+    platform        ENUM('android', 'ios', 'web') DEFAULT NULL,
+    app_version     VARCHAR(20) DEFAULT NULL,
+    created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_usage_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY uk_user_usage (user_id)
+) ENGINE=InnoDB;
